@@ -16,6 +16,28 @@ def parse_soup(url: str) -> str:
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup.find('body').text
 
+def search_in_dict(word: str) -> str:
+    """
+    Поиск слова во внешнем словаре
+    :param word: str
+    :return: str
+    """
+    for el in dictionary_eng_ru:
+        if word in el['en']:
+            return el['ru']
+        else:
+            return 'НЕ НАЙДЕНО'
+
+def my_stat():
+    """
+    Вывод статистики
+    :return: None
+    """
+    print('*************************************************')
+    print(f'* Записей в словаре: {len(data["know"]) + len(data["dont_know"])}')
+    print(f'* Из них известных слов: {len(data["know"])}')
+    print(f'* Из них слов которые надо выучить: {len(data["dont_know"])}')
+    print('*************************************************')
 def guess_words():
     """
     Перебираем слова в словаре data
@@ -30,6 +52,11 @@ def guess_words():
         if ask.upper() == 'EXIT':
             break
         elif ask == '-':
+            translate = search_in_dict(key)
+            if translate != 'НЕ НАЙДЕНО':
+                print(f'Это слово переводится как: "{translate}"')
+            else:
+                print(f'В нашей версии словаря это слово {translate}')
             continue
         elif ask == '+':
             print('Как переводится это слово?:')
@@ -38,10 +65,7 @@ def guess_words():
             key_for_del.append(key)
     for el in key_for_del:
         del data['dont_know'][el]
-    print('*******************************')
-    print(f'Записей в словаре {len(data["know"]) + len(data["dont_know"])}')
-    print(f'Из них знакомых слов: {len(data["know"])}')
-    print(f'Из них слов которые надо выучить: {len(data["dont_know"])}')
+    print()
 
 def parse_and_add_words():
     """
@@ -62,8 +86,11 @@ def parse_and_add_words():
         else:
             data['know'][key][0] = data['know'][key][0] + value
 
-# Приветствие
+# Загружаем внешний англо-русский словарь
+with open('words.json', 'r', encoding='UTF-8') as dict_file:
+    dictionary_eng_ru = json.load(dict_file)
 
+# Приветствие
 tprint("Tech   ENG   for   Me")
 print(f'### Привет! Сегодня будем парсить странички и учить новые неизвестные слова ###')
 
@@ -80,13 +107,15 @@ else:
 # Начало
 while True:
     print()
-    print('Выбери действие:\n1 - загрузить новые слова\n2 - разобрать те слова, что уже есть\n3 - выйти')
+    print('Выбери действие:\n1 - загрузить новые слова\n2 - разобрать те слова, что уже есть\n3 - вывести статистику\n4 - выйти')
     user_select = input('Твой выбор: ')
     if user_select == '1':
         parse_and_add_words()
     elif user_select == '2':
         guess_words()
     elif user_select == '3':
+        my_stat()
+    elif user_select == '4':
         break
     else:
         print('Вводи корректные значения, пожалуйста!')
