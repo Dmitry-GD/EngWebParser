@@ -5,7 +5,6 @@ import os
 import requests
 import re
 
-#url = 'https://docs.djangoproject.com/en/4.1/topics/db/models/'
 def parse_soup(url: str) -> str:
     """
     Функция считывания html страницы и вывода только текста страницы заключенного между тегами <body>
@@ -34,6 +33,7 @@ if 'eng_dict.json' not in file_list:    # Если нет - создаем но�
 else:
     with open('eng_dict.json', 'r', encoding='UTF-8') as file:  # Если есть - открываем его и работаем с ним
         data = json.load(file)
+
 def guess_words():
     """
     Перебираем слова в словаре data
@@ -59,6 +59,7 @@ def guess_words():
     print(f'Записей в словаре {len(data["know"]) + len(data["dont_know"])}')
     print(f'Из них знакомых слов: {len(data["know"])}')
     print(f'Из них слов которые надо выучить: {len(data["dont_know"])}')
+
 def parse_and_add_words():
     """
     Парсим html страницу и добавляем новые слова в существующй словарь data
