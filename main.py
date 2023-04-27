@@ -23,8 +23,9 @@ def guess_words():
     print('Начнем разбирать слова, как только надоест набери EXIT')
     key_for_del = []
     for key, value in data['dont_know'].items():
-        print(f'Ты знаешь слово {key}, оно встречается в тексте {value}')
-        ask = input('+ (Да)/ - (Нет)/ EXIT для выхода')
+        print(f'Ты знаешь слово {key}? Оно встречается в тексте {value} раз.')
+        print('+ (Да)/ - (Нет)/ EXIT для выхода')
+        ask = input()
         if ask.upper() == 'EXIT':
             break
         elif ask == '-':
@@ -61,7 +62,7 @@ def parse_and_add_words():
             data['know'][key][0] = data['know'][key][0] + value
 
 # Приветствие
-print(f'### Привет сегодня будем парсить странички и учить новые неизвестные слова ###')
+print(f'### Привет! Сегодня будем парсить странички и учить новые неизвестные слова ###')
 
 # Проверяем существует ли файл
 file_list = os.listdir()
@@ -76,7 +77,7 @@ else:
 # Начало
 while True:
     print()
-    print('Выбери что будем делать:\n1 - загрузим новые слова\n2 - разберем те слова что уже есть\n3 - выйти')
+    print('Выбери действие:\n1 - загрузить новые слова\n2 - разобрать те слова, что уже есть\n3 - выйти')
     user_select = input('Твой выбор: ')
     if user_select == '1':
         parse_and_add_words()
