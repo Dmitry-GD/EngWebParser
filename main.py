@@ -59,6 +59,7 @@ def parse_and_add_words():
                 data['dont_know'][key] = data['dont_know'].get(key) + value
         else:
             data['know'][key][0] = data['know'][key][0] + value
+
 # Приветствие
 print(f'### Привет сегодня будем парсить странички и учить новые неизвестные слова ###')
 
@@ -86,5 +87,6 @@ while True:
     else:
         print('Вводи корректные значения, пожалуйста!')
 
-with open('eng_dict.json', 'w', encoding='UTF-8') as file:  # Сохраняем измененный словарь
+# Сохраняем измененный словарь при выходе
+with open('eng_dict.json', 'w', encoding='UTF-8') as file:
     json.dump(data, file, ensure_ascii=False)
