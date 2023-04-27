@@ -15,25 +15,6 @@ def parse_soup(url: str) -> str:
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup.find('body').text
 
-# Приветствие
-print(f'### Привет сегодня будем парсить странички и учить новые неизвестные слова ###')
-
-# Проверяем существует ли файл
-file_list = os.listdir()
-if 'eng_dict.json' not in file_list:    # Если нет - создаем новый словарь (первый запуск программы)
-    data = {'know': {}, 'dont_know': {}}
-    print('Это первый запуск программы. Какую страничку будем разбирать?')
-    url = input('Адрес сайта: ')
-    body = str(parse_soup(url))
-    word_list = re.findall(r'\b[a-zA-Z-]+\b', body)
-    counter_dict = Counter(map(str.lower, word_list))
-    print(f'Найдено слов: {len(counter_dict)}')
-    for key, value in counter_dict.items():
-        data['dont_know'][key] = value
-else:
-    with open('eng_dict.json', 'r', encoding='UTF-8') as file:  # Если есть - открываем его и работаем с ним
-        data = json.load(file)
-
 def guess_words():
     """
     Перебираем слова в словаре data
@@ -78,6 +59,18 @@ def parse_and_add_words():
                 data['dont_know'][key] = data['dont_know'].get(key) + value
         else:
             data['know'][key][0] = data['know'][key][0] + value
+# Приветствие
+print(f'### Привет сегодня будем парсить странички и учить новые неизвестные слова ###')
+
+# Проверяем существует ли файл
+file_list = os.listdir()
+if 'eng_dict.json' not in file_list:    # Если нет - создаем новый словарь (первый запуск программы)
+    data = {'know': {}, 'dont_know': {}}
+    print('Это первый запуск программы. Какую страничку будем разбирать?')
+    parse_and_add_words()
+else:
+    with open('eng_dict.json', 'r', encoding='UTF-8') as file:  # Если есть - открываем его и работаем с ним
+        data = json.load(file)
 
 # Начало
 while True:
