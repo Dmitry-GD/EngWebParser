@@ -1,8 +1,8 @@
+from art import tprint
 from collections import Counter
 from bs4 import BeautifulSoup
 import json
 import os
-from art import tprint
 import requests
 import re
 
