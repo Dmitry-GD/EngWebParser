@@ -23,7 +23,7 @@ def guess_words():
     print('Начнем разбирать слова, как только надоест набери EXIT')
     key_for_del = []
     for key, value in data['dont_know'].items():
-        print(f'Ты знаешь слово {key}? Оно встречается в тексте {value} раз.')
+        print(f'Ты знаешь слово "{key}"? Оно встречается в тексте {value} раз.')
         print('+ (Да)/ - (Нет)/ EXIT для выхода')
         ask = input()
         if ask.upper() == 'EXIT':
