@@ -2,6 +2,7 @@ from collections import Counter
 from bs4 import BeautifulSoup
 import json
 import os
+from art import tprint
 import requests
 import re
 
@@ -62,6 +63,8 @@ def parse_and_add_words():
             data['know'][key][0] = data['know'][key][0] + value
 
 # Приветствие
+
+tprint("Tech   ENG   for   Me")
 print(f'### Привет! Сегодня будем парсить странички и учить новые неизвестные слова ###')
 
 # Проверяем существует ли файл
