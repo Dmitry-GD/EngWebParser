@@ -38,6 +38,7 @@ def my_stat():
     print(f'* Из них известных слов: {len(data["know"])}')
     print(f'* Из них слов которые надо выучить: {len(data["dont_know"])}')
     print('*************************************************')
+
 def guess_words():
     """
     Перебираем слова в словаре data
@@ -77,6 +78,8 @@ def parse_and_add_words():
     word_list = re.findall(r'\b[a-zA-Z-]+\b', body)
     counter_dict = Counter(map(str.lower, word_list))
     print(f'Найдено слов: {len(counter_dict)}')
+    data['count_page'] += 1
+    data['list_page'].append(url)
     for key, value in counter_dict.items():
         if key not in data['know'].keys():
             if key not in data['dont_know'].keys():
@@ -97,7 +100,7 @@ print(f'### Привет! Сегодня будем парсить страни�
 # Проверяем существует ли файл
 file_list = os.listdir()
 if 'eng_dict.json' not in file_list:    # Если нет - создаем новый словарь (первый запуск программы)
-    data = {'know': {}, 'dont_know': {}}
+    data = {'know': {}, 'dont_know': {}, 'count_page': 0, 'list_page': []}
     print('Это первый запуск программы. Какую страничку будем разбирать?')
     parse_and_add_words()
 else:
@@ -123,3 +126,8 @@ while True:
 # Сохраняем измененный словарь при выходе
 with open('eng_dict.json', 'w', encoding='UTF-8') as file:
     json.dump(data, file, ensure_ascii=False)
+
+'''
+Добавить предупреждение, когда словарь с неразобранными словами заканчивается
+Добавить статистику по весу слов
+'''
